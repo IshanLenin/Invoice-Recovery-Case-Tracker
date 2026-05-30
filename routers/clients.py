@@ -1,20 +1,13 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from typing import List 
-from .. import models, schemas
-from ..database import SessionLocal
+import models
+import schemas
+from database import SessionLocal, get_db
 
-#Create a prefix for the endpoints instead of writing it in every endpoint. 
-#tags is used to group the endpoints in the swagger ui.
+# Create a prefix for the endpoints instead of writing it in every endpoint. 
+# tags is used to group the endpoints in the swagger ui.
 router = APIRouter(prefix="/api/v1/clients", tags=["Client Management"])
-
-# Dependency to get DB session (assumed configured in database.py)
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
 
 @router.post("/", response_model=schemas.ClientResponse, status_code=status.HTTP_201_CREATED)
 def create_client(client: schemas.ClientCreate, db: Session = Depends(get_db)):

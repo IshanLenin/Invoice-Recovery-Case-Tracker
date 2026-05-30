@@ -1,13 +1,14 @@
 import os
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, declarative_base
+from dotenv import load_dotenv
 
-# In a real environment, this comes from a .env file
+# Load environment variables from the .env file
+load_dotenv()
+
 # Format: postgresql://<username>:<password>@<host>:<port>/<database_name>
-SQLALCHEMY_DATABASE_URL = os.getenv(
-    "DATABASE_URL", 
-    "postgresql://postgres:yourpassword@localhost:5432/payassured_db"
-)
+SQLALCHEMY_DATABASE_URL = os.getenv("DATABASE_URL")
+
 
 # Connect to PostgreSQL
 engine = create_engine(SQLALCHEMY_DATABASE_URL)
