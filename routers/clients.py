@@ -1,0 +1,45 @@
+from fastapi import APIRouter, Depends, HTTPException, status
+from sqlalchemy.orm import Session
+from typing import List 
+from .. import models, schemas
+from ..database import SessionLocal
+
+#Create a prefix for the endpoints instead of writing it in every endpoint. 
+#tags is used to group the endpoints in the swagger ui.
+router = APIRouter(prefix="/api/v1/clients", tags=["Client Management"])
+
+# Dependency to get DB session (assumed configured in database.py)
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
+
+@router.post("/", response_model=schemas.ClientResponse, status_code=status.HTTP_201_CREATED)
+def create_client(client: schemas.ClientCreate, db: Session = Depends(get_db)):
+    # Check for existing unique fields to prevent unhandled database integrity crashes
+    db_client = db.query(models.Client).filter(
+        (models.Client.email == client.email) | 
+        (models.Client.company_name == client.company_name) |
+        (models.Client.phone == client.phone)
+    ).first()
+    
+    if db_client:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="A client with this company name, email, or phone already exists."
+        )
+    #Converts the pydantic ClientCreate object into a plain Python dictionary.
+    new_client = models.Client(**client.model_dump())
+    db.add(new_client)
+    db.commit()
+    db.refresh(new_client)
+    return new_client
+
+@router.get("/", response_model=List[schemas.ClientResponse])
+def list_clients(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+    #It uses the offset and limit parameters to skip a certain number of records and limit the number of records returned.
+    clients = db.query(models.Client).offset(skip).limit(limit).all() 
+    return clients
+
