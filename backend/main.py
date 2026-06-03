@@ -1,10 +1,12 @@
+# pyrefly: ignore [missing-import]
 from fastapi import FastAPI
+# pyrefly: ignore [missing-import]
 from fastapi.middleware.cors import CORSMiddleware
-import models
-from database import engine
-from routers import clients, cases
+import backend.models
+from backend.database import engine
+from .routers import clients, cases
 # Automatically create the SQLite/PostgreSQL database tables on startup
-models.Base.metadata.create_all(bind=engine)
+backend.models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI(
     title="PayAssured Internal CRM",
