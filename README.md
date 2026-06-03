@@ -27,7 +27,7 @@ cd Invoice-Recovery-Project
 ### 2. Database configuration
 Create an .env file inside the /backend folder and match the postgres details to match the one in your local machine.
 ```plaintext
-DATABASE_URL="postgresql://<username>:<password>@localhost:5432/primetrade_db"
+DATABASE_URL="postgresql://<username>:<password>@localhost:5432/payassured_db"
 ```
 
 ### 3. Start the backend
@@ -64,12 +64,12 @@ pip install -r requirements.txt
 uvicorn app.main:app --reload
 ```
 
-***
-###💡Features
 
-Client Management: Create and view debtor profiles.
+### 💡Features
 
-Case Management: Create and track invoice recovery cases linked to specific clients.
+### Client Management: Create and view debtor profiles.
 
-CORS Configured: Backend and frontend communicate seamlessly across local ports
-***
+### Case Management: Create and track invoice recovery cases linked to specific clients.
+
+### CORS Configured: Backend and frontend communicate seamlessly across local ports
+
