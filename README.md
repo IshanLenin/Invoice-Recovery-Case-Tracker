@@ -64,7 +64,7 @@ pip install -r requirements.txt
 uvicorn app.main:app --reload
 ```
 
-**###💡Features
+**💡Features
 Client Management: Create and view debtor profiles.
 
 Case Management: Create and track invoice recovery cases linked to specific clients.
