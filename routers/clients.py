@@ -7,7 +7,7 @@ from database import SessionLocal, get_db
 
 # Create a prefix for the endpoints instead of writing it in every endpoint. 
 # tags is used to group the endpoints in the swagger ui.
-router = APIRouter(prefix="/api/v1/clients", tags=["Client Management"])
+router = APIRouter(prefix="/api/clients", tags=["Client Management"])
 
 @router.post("/", response_model=schemas.ClientResponse, status_code=status.HTTP_201_CREATED)
 def create_client(client: schemas.ClientCreate, db: Session = Depends(get_db)):

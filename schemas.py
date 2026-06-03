@@ -54,7 +54,7 @@ class ClientBase(BaseModel):
         return clean_phone
 
 class ClientCreate(ClientBase):
-    pass # Fields needed when inserting a new client
+    pass 
 
 class ClientResponse(ClientBase):
     id: int

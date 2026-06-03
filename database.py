@@ -9,7 +9,6 @@ load_dotenv()
 # Format: postgresql://<username>:<password>@<host>:<port>/<database_name>
 SQLALCHEMY_DATABASE_URL = os.getenv("DATABASE_URL")
 
-
 # Connect to PostgreSQL
 engine = create_engine(SQLALCHEMY_DATABASE_URL)
 

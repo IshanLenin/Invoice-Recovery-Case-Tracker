@@ -21,9 +21,9 @@ app.add_middleware(
     allow_headers=["*"], #Allows all standard HTTP headers.
 )
 
-# Register the routes exactly as PayAssured requested them
-app.include_router(clients.router, prefix="/clients")
-app.include_router(cases.router, prefix="/cases")
+# Register the routes — prefixes are already defined inside each router
+app.include_router(clients.router)
+app.include_router(cases.router)
 
 @app.get("/")
 def health_check():

@@ -7,7 +7,7 @@ import schemas
 from database import get_db
 
 
-router = APIRouter(prefix="/api/v1/cases", tags=["Case Management"])
+router = APIRouter(prefix="/api/cases", tags=["Case Management"])
 
 @router.post("/", response_model=schemas.CaseResponse, status_code=status.HTTP_201_CREATED)
 def create_case(case: schemas.CaseCreate, db: Session = Depends(get_db)):
